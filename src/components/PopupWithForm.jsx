@@ -1,6 +1,4 @@
-//import React from "react";
-
-function PopupWithForm({ title, name, isOpen, onClose, children }) {
+function PopupWithForm({ title, name, isOpen, onClose, children, buttonText }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen && 'popup_is-opened'}`}>
       <div className="popup__container">
@@ -20,9 +18,8 @@ function PopupWithForm({ title, name, isOpen, onClose, children }) {
             {children}
             <button 
               className="popup__save-button"
-              aria-label="Сохранить"
               type="submit">
-              Сохранить
+              {buttonText}
             </button>
           </fieldset>
         </form>

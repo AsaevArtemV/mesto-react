@@ -1,5 +1,3 @@
-//import React from 'react';
-
 function ImagePopup({ card, onClose }) {
   return (
     <div className={`popup popup_type_increase-card ${card ? 'popup_is-opened' : ''}`}>
@@ -11,7 +9,7 @@ function ImagePopup({ card, onClose }) {
           type='button'>
         </button>
         <img 
-          src={card ? card.link : '#'}
+          src={card?.link}
           className='popup__img'
           alt={card ? card.name : ''}
         />

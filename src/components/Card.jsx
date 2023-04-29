@@ -1,6 +1,3 @@
-//создание и функционирование карточки
-//import React from 'react';
-
 function  Card ({ onCardClick, link, name, likes }) {
 
   function handleClickCard() {
