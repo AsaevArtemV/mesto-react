@@ -11,14 +11,18 @@ class Api {
 
 //Загрузка информации о пользователе с сервера
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
-      .then(res => this._checkResponse(res))
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res))
   }
 
 //Загрузка карточек с сервера
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
-      .then(res => this._checkResponse(res))
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res))
   }
 
 //Устанавливает новые имя и профессию текущего пользователя
@@ -31,7 +35,7 @@ class Api {
         about: about,
       }),
     })
-      .then(res => this._checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
 //Добавление новой карточки
@@ -44,25 +48,32 @@ class Api {
         link: link,
       }),
     })
-      .then(res => this._checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
- // добавить лайк карточки
+// добавить лайк карточки
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
     })
-      .then(res => this._checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
-  // удалить лайк карточки
+// удалить лайк карточки
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })
       .then(res => this._checkResponse(res))
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    if (!isLiked) {
+      return api.addLike(id);
+    }
+    return api.deleteLike(id);
   }
 
 //Удаление карточки
@@ -83,7 +94,7 @@ class Api {
         avatar: link,
       }),
     })
-      .then(res => this._checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 }
 
