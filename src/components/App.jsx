@@ -9,7 +9,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import PopupWithForm from "./PopupWithForm";
 //import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import { api } from "../utils/Api";
-import { CurrentUserContext } from "./CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -17,6 +17,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   //const [isDeletedCardPopupOpen, setIsDeletedCardPopupOpen] = useState(null);
+
+  const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || selectedCard
 
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -30,8 +32,30 @@ function App() {
       setCurrentUser(res[0]);
       setCards([...res[1]])
     })
-    .catch((err) => console.log(err));
+    .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    const handleOverlay = (evt) => {
+        if (evt.target.classList.contains('popup_is-opened')) {
+            closeAllPopups();
+        }
+      };
+
+    if(isOpen) { // навешиваем только при открытии
+      document.addEventListener('keydown', closeByEscape);
+      document.addEventListener('mousedown', handleOverlay);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+        document.removeEventListener('mousedown', handleOverlay);
+      }
+    }
+  }, [isOpen])
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -40,6 +64,8 @@ function App() {
     setSelectedCard(null);
     //setIsDeletedCardPopupOpen(null);
   }
+
+
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -70,7 +96,7 @@ function App() {
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === _id ? newCard : c));
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleCardDelete(id) {
@@ -81,7 +107,7 @@ function App() {
         //closeAllPopups();
         //console.log("тест")
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleUpdateUser(userInfo) {
@@ -91,7 +117,7 @@ function App() {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleUpdateAvatar(data) {
@@ -101,7 +127,7 @@ function App() {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleAddPlaceSubmit(card) {
@@ -111,7 +137,7 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   return (

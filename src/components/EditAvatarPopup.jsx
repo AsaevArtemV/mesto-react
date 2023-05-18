@@ -1,8 +1,13 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef('');
+
+  //Сброс значений инпутов при открытии/закрытии попапа или при смене пользователя
+  useEffect(() => {
+    avatarRef.current.value = '';
+  }, [isOpen]);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -11,7 +16,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     onUpdateAvatar({ 
         avatar: avatarRef.current.value 
     });
-    avatarRef.current.value = '';
   }
 
   return (
