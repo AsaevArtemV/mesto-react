@@ -7,7 +7,6 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import PopupWithForm from "./PopupWithForm";
-//import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -16,7 +15,6 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  //const [isDeletedCardPopupOpen, setIsDeletedCardPopupOpen] = useState(null);
 
   const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || selectedCard
 
@@ -62,7 +60,6 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
-    //setIsDeletedCardPopupOpen(null);
   }
 
 
@@ -83,10 +80,6 @@ function App() {
     setSelectedCard(card);
   }
 
-  //function handleCardDeleteClick(card) {
-    //setIsDeletedCardPopupOpen(card);
-  //}
-
   function handleCardLike(likes, _id) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = likes.some(i => i._id === currentUser._id);
@@ -104,8 +97,6 @@ function App() {
       .deleteCard(id)
       .then(() => {
         setCards((state) => state.filter((card) => card._id !== id));
-        //closeAllPopups();
-        //console.log("тест")
       })
       .catch(console.error);
   }
