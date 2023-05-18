@@ -6,7 +6,8 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import PopupWithForm from "./PopupWithForm";
+//import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "./CurrentUserContext";
 
@@ -15,7 +16,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isDeletedCardPopupOpen, setIsDeletedCardPopupOpen] = useState(null);
+  //const [isDeletedCardPopupOpen, setIsDeletedCardPopupOpen] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -37,7 +38,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
-    setIsDeletedCardPopupOpen(null);
+    //setIsDeletedCardPopupOpen(null);
   }
 
   function handleEditProfileClick() {
@@ -56,9 +57,9 @@ function App() {
     setSelectedCard(card);
   }
 
-  function handleCardDeleteClick(card) {
-    setIsDeletedCardPopupOpen(card);
-  }
+  //function handleCardDeleteClick(card) {
+    //setIsDeletedCardPopupOpen(card);
+  //}
 
   function handleCardLike(likes, _id) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -78,7 +79,7 @@ function App() {
       .then(() => {
         setCards((state) => state.filter((card) => card._id !== id));
         //closeAllPopups();
-        console.log("тест")
+        //console.log("тест")
       })
       .catch((err) => console.log(err));
   }
@@ -124,7 +125,7 @@ function App() {
               onEditAvatar={handleEditAvatarClick}
               onCardClick={handleCardClick}
               onCardLike={handleCardLike}
-              onCardDelete={handleCardDeleteClick}
+              onCardDelete={handleCardDelete}
               cards={cards}
             />
           <Footer />
@@ -152,10 +153,11 @@ function App() {
               onClose={closeAllPopups}
             />
             {/* <!--Удаления карточки--> */}
-            <ConfirmDeletePopup
-              isOpen={isDeletedCardPopupOpen}
-              onClose={closeAllPopups}
-              onDelete={handleCardDelete}
+            <PopupWithForm
+                name="delete"
+                title="Вы уверены?"
+                buttonText={'Да'}
+                isOpen={false}
             />
         </CurrentUserContext.Provider>
       </div>

@@ -7,6 +7,7 @@ function ConfirmDeletePopup({ isOpen, onClose, onDelete }) {
   function handleSubmit(e) {
     e.preventDefault();
     onDelete();
+    console.log(onDelete())
   }
 
   return (
@@ -21,4 +22,6 @@ function ConfirmDeletePopup({ isOpen, onClose, onDelete }) {
   )
 }
 
-export default ConfirmDeletePopup;
+//export default ConfirmDeletePopup;
+
+<ConfirmDeletePopup isOpen={isDeletedCardPopupOpen} onClose={closeAllPopups} onDelete={handleCardDelete}/>
